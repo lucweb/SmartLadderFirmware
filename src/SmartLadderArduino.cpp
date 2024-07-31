@@ -13,7 +13,6 @@
 #include "proccess/memory/arduino.h"
 #include "proccess/settings/arduino.h"
 #include "proccess/stepper.h"
-#include "proccess/wire.h"
 
 SmartLadderArduino::smartLadder()
 {
