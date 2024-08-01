@@ -1,22 +1,16 @@
-#if defined(ESP32)
-    #include "SmartLadderEsp32.h"
-#elif defined(ESP8266)
-    #include "SmartLadderEsp8266.h"
-#else
-    #include "SmartLadderArduino.h"
-#endif
+#include "Generic.h"
 
-bool SmartLadderArduino::isForce(int i, char tipo = 0)
+bool Generic::isForce(int i, char tipo)
 {
   String fMsg = "";
-  for (int x = 0; x < _F.length(); x++)
+  for (int x = 0; x < F_F.length(); x++)
   {
-    if (_F[x] != ';')
-      fMsg += _F[x];
+    if (F_F[x] != ';')
+      fMsg += F_F[x];
     else
     {
       fMsg.remove(0, 1);
-      String tp = (tipo == 0) ? "" : String(tipo);
+      String tp = (tipo == '0') ? "" : String(tipo);
       if (fMsg == "/" + tp + String(i))
         return 1;
       fMsg = "";
@@ -25,7 +19,7 @@ bool SmartLadderArduino::isForce(int i, char tipo = 0)
   return 0;
 }
 
-void SmartLadderArduino::setForce(String m)
+void Generic::setForce(String m)
 {
   String b = "";
   for (int i = 2; i < m.length(); i++)
@@ -40,17 +34,17 @@ void SmartLadderArduino::setForce(String m)
     digitalWrite(b.toInt(), String(m[0]).toInt());
 }
 
-void SmartLadderArduino::upForce()
+void Generic::upForce()
 {
-  String _FMsg = "";
-  for (int x = 0; x < _F.length(); x++)
+  String F_FMsg = "";
+  for (int x = 0; x < F_F.length(); x++)
   {
-    if (_F[x] != ';')
-      _FMsg += _F[x];
+    if (F_F[x] != ';')
+      F_FMsg += F_F[x];
     else
     {
-      setForce(_FMsg);
-      _FMsg = "";
+      setForce(F_FMsg);
+      F_FMsg = "";
     }
   }
 }

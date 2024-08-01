@@ -1,12 +1,6 @@
-#if defined(ESP32)
-    #include "SmartLadderEsp32.h"
-#elif defined(ESP8266)
-    #include "SmartLadderEsp8266.h"
-#else
-    #include "SmartLadderArduino.h"
-#endif
+#include "Generic.h"
 
-bool SmartLadderArduino::atvIOPort(int resource, int tCond, int s)
+bool Generic::atvIOPort(int resource, int tCond, int s)
 {
   switch (tCond)
   {

@@ -1,12 +1,6 @@
-#if defined(ESP32)
-    #include "SmartLadderEsp32.h"
-#elif defined(ESP8266)
-    #include "SmartLadderEsp8266.h"
-#else
-    #include "SmartLadderArduino.h"
-#endif
+#include "Generic.h"
 
-void SmartLadderArduino::start()
+void Generic::start()
 {
   byte state = 0;
   String param1 = "";

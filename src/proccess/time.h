@@ -1,27 +1,22 @@
-#if defined(ESP32)
-    #include "SmartLadderEsp32.h"
-#elif defined(ESP8266)
-    #include "SmartLadderEsp8266.h"
-#else
-    #include "SmartLadderArduino.h"
-#endif
-int SmartLadderArduino::getTemp(int x)
+#include "Generic.h"
+
+int Generic::getTemp(int x)
 {
   return TL_TL[x] > 0 ? (millis() - TL_TL[x]) : (TL_TL[x] < 0 ? abs(TL_TL[x]) : 0);
 }
 
-void SmartLadderArduino::loopTemp(int t, int qt)
+void Generic::loopTemp(int t, int qt)
 {
   if (millis() - TL_TL[t] >= qt)
     TL_TL[t] = -qt;
 }
 
-void SmartLadderArduino::resetTemp(int t)
+void Generic::resetTemp(int t)
 {
   TL_TL[t] = 0;
 }
 
-bool SmartLadderArduino::validaTemp(int t, int qt)
+bool Generic::validaTemp(int t, int qt)
 {
   if (TL_TL[t] >= 0)
   {
@@ -32,7 +27,7 @@ bool SmartLadderArduino::validaTemp(int t, int qt)
   return (TL_TL[t] < 0);
 }
 
-bool SmartLadderArduino::atvTime(String port, int tCond, String prop, int s)
+bool Generic::atvTime(String port, int tCond, String prop, int s)
 {
   port.remove(0, 1);
   int t = port.toInt();

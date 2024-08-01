@@ -1,12 +1,6 @@
-#if defined(ESP32)
-    #include "SmartLadderEsp32.h"
-#elif defined(ESP8266)
-    #include "SmartLadderEsp8266.h"
-#else
-    #include "SmartLadderArduino.h"
-#endif
+#include "Generic.h"
 
-bool SmartLadderArduino::atvIOBit(String port, int tCond, int s)
+bool Generic::atvIOBit(String port, int tCond, int s)
 {
   port.remove(0, 1);
   int b = port.toInt();

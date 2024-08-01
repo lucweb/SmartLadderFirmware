@@ -1,12 +1,6 @@
-#if defined(ESP32)
-    #include "SmartLadderEsp32.h"
-#elif defined(ESP8266)
-    #include "SmartLadderEsp8266.h"
-#else
-    #include "SmartLadderArduino.h"
-#endif
+#include "Generic.h"
 
-int SmartLadderArduino::checkStatus(String port)
+int Generic::checkStatus(String port)
 {
   int resource = port.toInt();
   if (resource)
@@ -32,7 +26,7 @@ int SmartLadderArduino::checkStatus(String port)
   return 0;
 }
 
-bool SmartLadderArduino::setEqual(String tipoCond, String sA, String sB)
+bool Generic::setEqual(String tipoCond, String sA, String sB)
 {
     int iA = sA.indexOf('/');
     int iB = sB.indexOf('/');

@@ -1,12 +1,6 @@
-#if defined(ESP32)
-#include "SmartLadderEsp32.h"
-#elif defined(ESP8266)
-#include "SmartLadderEsp8266.h"
-#else
-#include "SmartLadderArduino.h"
-#endif
+#include "Generic.h"
 
-bool SmartLadderArduino::stepper(int resource, String values)
+bool Generic::stepper(int resource, String values)
 {
   int p = 0;
   String v1 = "";
@@ -34,13 +28,13 @@ bool SmartLadderArduino::stepper(int resource, String values)
   int totalSteps = v2.toInt();
   int c = v3.toInt();
 
-  if(v4 == '1')
+  if(v4 == F("1"))
     return asyncStepper(resource, speed, totalSteps, c);
 
   return basicStepper(resource, speed, totalSteps, c);
 }
 
-bool SmartLadderArduino::basicStepper(int pin, int v, int totalSteps, int c)
+bool Generic::basicStepper(int pin, int v, int totalSteps, int c)
 {
   if (CT_CT[c] >= totalSteps)
     return true;
@@ -53,7 +47,7 @@ bool SmartLadderArduino::basicStepper(int pin, int v, int totalSteps, int c)
   return false;
 }
 
-bool SmartLadderArduino::asyncStepper(int pin, int v, int totalSteps, int c)
+bool Generic::asyncStepper(int pin, int v, int totalSteps, int c)
 {
   if (CT_CT[c] >= totalSteps)
     return true;

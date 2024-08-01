@@ -1,17 +1,11 @@
-#if defined(ESP32)
-    #include "SmartLadderEsp32.h"
-#elif defined(ESP8266)
-    #include "SmartLadderEsp8266.h"
-#else
-    #include "SmartLadderArduino.h"
-#endif
+#include "Generic.h"
 
-int SmartLadderArduino::getCount(int i)
+int Generic::getCount(int i)
 {
   return abs(CT_CT[i]);
 }
 
-bool SmartLadderArduino::setCount(int i, int t)
+bool Generic::setCount(int i, int t)
 {
   if (CT_CT[i] >= 0 && CT_CT[i] < t && !C_CCCTU[i])
   {
@@ -23,12 +17,12 @@ bool SmartLadderArduino::setCount(int i, int t)
   return getCount(i) == t;
 }
 
-void SmartLadderArduino::resetCount(int i)
+void Generic::resetCount(int i)
 {
   CT_CT[i] = 0;
 }
 
-int SmartLadderArduino::setCountDown(int i, int t)
+int Generic::setCountDown(int i, int t)
 {
   if (getCount(i) != 0 && !C_CCCTD[i])
   {
@@ -40,7 +34,7 @@ int SmartLadderArduino::setCountDown(int i, int t)
   return getCount(i) == 0;
 }
 
-bool SmartLadderArduino::atvCountDown(String port, int tCond, String prop, int s)
+bool Generic::atvCountDown(String port, int tCond, String prop, int s)
 {
   port.remove(0, 1);
   int t = port.toInt();
@@ -50,7 +44,7 @@ bool SmartLadderArduino::atvCountDown(String port, int tCond, String prop, int s
   return r;
 }
 
-bool SmartLadderArduino::atvCount(String port, int tCond, String prop, int s)
+bool Generic::atvCount(String port, int tCond, String prop, int s)
 {
   port.remove(0, 1);
   int t = port.toInt();
