@@ -15,7 +15,7 @@ public:
   void loop();
     
 private:
-
+  unsigned long measureCycleTime(void (*func)());
   void declare(int port, char tipePort);
   void typePort();
   int pEEPROM();

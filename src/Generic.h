@@ -20,8 +20,7 @@ public:
   int atvIADCPort(String resource);
 #else
   String P_P, F_F, R_R, TD_TD;
-  int CT_CT[10];
-  long int TL_TL[10];
+  long int TL_TL[10], CT_CT[10];
   byte B_B[20], _ST, _TPR, C_CCCTU[10], C_CCCTD[10];
   int atvIADCPort(int resource);
 #endif
@@ -29,14 +28,14 @@ public:
   bool stepper(int resource, String values);
   bool basicStepper(int pin, int v, int totalSteps, int count);
   bool asyncStepper(int pin, int v, int totalSteps, int count);
-  bool atvIOBit(String port, int tCond, int s);
+  bool atvIOBit(const char* port, int tCond, int s);
   bool isForce(int i, char tipo = '0');
   void setForce(String m);
   void upForce();
   void start();
   bool atv(String tipoCond, String port, String prop, int s);
-  int checkStatus(String port);
-  bool setEqual(String tipoCond, String sA, String sB);
+  int checkStatus(const char* port);
+  bool setEqual(const char* tipoCond, const char* sA, const char* sB);
   int getCount(int i);
   bool setCount(int i, int t);
   void resetCount(int i);
@@ -45,11 +44,11 @@ public:
   void loopTemp(int t, int qt);
   void resetTemp(int t);
   bool validaTemp(int t, int qt);
-  bool atvTime(String port, int tCond, String prop, int s);
-  bool atvCount(String port, int tCond, String prop, int s);
-  bool atvCountDown(String port, int tCond, String prop, int s);
+  bool atvTime(const char* port, int tCond, const char* prop, int s);
+  bool atvCount(const char* port, int tCond, const char* prop, int s);
+  bool atvCountDown(const char* port, int tCond, const char* prop, int s);
   bool atvIOPort(int resource, int tCond, int s);
-  int atvIDACPort(int resource, String value);
+  int atvIDACPort(int resource, const char* value);
 
 private:
 };

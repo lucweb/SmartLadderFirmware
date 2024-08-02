@@ -1,67 +1,67 @@
 #include "Generic.h"
 
-int Generic::checkStatus(String port)
+int Generic::checkStatus(const char* port)
 {
-  int resource = port.toInt();
-  if (resource)
-    digitalRead(resource);
+  if (isdigit(port[0]))
+  {
+    int resource = atoi(port);
+    if (resource)
+      return digitalRead(resource);
+  }
   else if (port[0] == 'b')
   {
-    port.remove(0, 1);
-    int t = port.toInt();
+    int t = atoi(port + 1); 
     return B_B[t];
   }
   else if (port[0] == 'T')
   {
-    port.remove(0, 1);
-    int t = port.toInt();
+    int t = atoi(port + 1); 
     return getTemp(t);
   }
   else if (port[0] == 'c')
   {
-    port.remove(0, 1);
-    int t = port.toInt();
+    int t = atoi(port + 1); 
     return getCount(t);
   }
   return 0;
 }
 
-bool Generic::setEqual(String tipoCond, String sA, String sB)
+bool Generic::setEqual(const char* tipoCond, const char* sA, const char* sB)
 {
-    int iA = sA.indexOf('/');
-    int iB = sB.indexOf('/');
+    const char* slashA = strchr(sA, '/');
+    const char* slashB = strchr(sB, '/');
     int a = 0;
     int b = 0;
-    if (iA >= 0)
-    {
-        sA.remove(0, 1);
-        a = checkStatus(sA);
-    }
-    else
-        a = sA.toInt();
 
-    if (iB >= 0)
+    if (slashA != nullptr)
     {
-        sB.remove(0, 1);
-        b = checkStatus(sB);
+        a = checkStatus(sA + 1);
     }
     else
-        b = sB.toInt();
+    {
+        a = atoi(sA);
+    }
+
+    if (slashB != nullptr)
+    {
+        b = checkStatus(sB + 1);
+    }
+    else
+    {
+        b = atoi(sB);
+    }
 
     switch (tipoCond[0])
     {
     case '=':
         return (a == b);
-        break;
     case '!':
         return (a != b);
-        break;
     case '-':
         return (a < b);
-        break;
     case '+':
         return (a > b);
-        break;
+    default:
+        return false;
     }
-    return false;
 }

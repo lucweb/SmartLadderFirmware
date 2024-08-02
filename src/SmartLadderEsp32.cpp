@@ -53,7 +53,7 @@ void SmartLadderEsp32::Task1code(void *pvParameters)
     if (DT_SV.length())
       ctrlDtSv();
 
-    if (_TPR == 0 && _ST > 0)
+    if (_TPR == 0 && _ST == 1)
       setStatusResource();
     conectLoop();
     vTaskDelay(1);

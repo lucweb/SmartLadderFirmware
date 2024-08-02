@@ -1,7 +1,7 @@
 #include "SmartLadderArduino.h"
 
 void SmartLadderArduino::emit(String v)
-{   
+{
     Serial.print(v);
 }
 
@@ -89,7 +89,7 @@ void SmartLadderArduino::eR()
 void SmartLadderArduino::emitDigitalRead()
 {
     String p = "";
-    String v = ">s";
+    String v = String('>' + 's');
     String va = "";
     for (int x = 0; x < R_R.length(); x++)
     {
