@@ -39,3 +39,19 @@ void loop() {
     smartLadder.loop();
 }
 ```
+
+## Usage with Esp32
+
+Here is a basic example of how to use the `SmartLadderFirmware` library in an Arduino sketch:
+
+```cpp
+#include <SmartLadderEsp32.h>
+
+SmartLadderEsp32 smartLadder;
+
+void setup() {
+  smartLadder.setup();
+}
+
+void loop() {}
+````
