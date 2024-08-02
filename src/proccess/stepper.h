@@ -35,9 +35,9 @@ bool Generic::stepper(int resource, String values)
   int c = atoi(v3);
 
   if (v4 == '1')
-    return asyncStepper(resource, speed, totalSteps, c);
+    return basicStepper(resource, speed, totalSteps, c);
 
-  return basicStepper(resource, speed, totalSteps, c);
+  return asyncStepper(resource, speed, totalSteps, c);
 }
 
 bool Generic::basicStepper(int pin, int v, int totalSteps, int c)
