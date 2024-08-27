@@ -4,7 +4,10 @@ void SmartLadderEsp32::emit(String v)
 {
     if (!ORIGIN_)
     {
+
+#if USE_ETH8720 || USE_WIFI
         MQTT.publish((CODE_ + "_").c_str(), v.c_str());
+#endif
         return;
     }
     else
@@ -61,7 +64,7 @@ void SmartLadderEsp32::eR()
     {
         emit(String(P_P.length()));
         if (_TPR == 0x40)
-            setEEPROMProgram();
+            setConfigProgram();
     }
     else if (_TPR == 0x24)
     {
@@ -73,21 +76,27 @@ void SmartLadderEsp32::eR()
         typePort();
         emit(String(R_R.length()));
         if (_TPR == 0x2A)
-            setEEPROMPort();
+        {
+            setConfigPort();
+        }
     }
     else if (_TPR == 0x63)
     {
         emit(VERSION);
-        emit(String(F("|")) + WiFi.status() + String(F("|")) + SSID_);
+        emit(String(F("|")) + String(USE_WIFI) + String(F("|")) + SSID_);
     }
     else if (_TPR == 0x7A)
     {
-        emit(String(F("_")) + CODE_ + String(F("|")) + getScanNetworks());
+        emit(String(F("_")) + CODE_ + String(F("|")));
+#if USE_WIFI
+        getScanNetworks();
+#endif
     }
     else if (_TPR == 0x78)
     {
-        reloadWifi();
-        TEMP_ = "";
+#if USE_ETH8720 || USE_WIFI
+        dataConfig(true);
+#endif
         emit(String(F("x")));
     }
 
@@ -119,7 +128,6 @@ void SmartLadderEsp32::emitDigitalRead()
             p = "";
         }
     }
-    // Serial.print(v + '-' + va + '-');
     emit(v + '-');
     emit(va + '-');
 }
@@ -145,51 +153,53 @@ void SmartLadderEsp32::setStatusResource()
 
 void SmartLadderEsp32::ctrlDtSv()
 {
-  String v = "";
-  String t = "";
-  bool c = false;
-  DT_SV += '|';
-  for (int x = 0; x < DT_SV.length(); x++)
-  {
-    if (!c)
+    String v = "";
+    String t = "";
+    bool c = false;
+    DT_SV += '|';
+    for (int x = 0; x < DT_SV.length(); x++)
     {
-      if (DT_SV[x] == '|')
-        c = true;
-      else
-        v += DT_SV[x];
+        if (!c)
+        {
+            if (DT_SV[x] == '|')
+                c = true;
+            else
+                v += DT_SV[x];
+        }
+        else if (DT_SV[x] != '|')
+        {
+            t += DT_SV[x];
+        }
+        else
+        {
+            v += ':';
+            v += getVDS(t);
+            t = "";
+        }
     }
-    else if (DT_SV[x] != '|')
-    {
-      t += DT_SV[x];
-    }
-    else
-    {
-      v += ':';
-      v += getVDS(t);
-      t = "";
-    }
-  }
-  emitDtSv(v);
-  DT_SV = "";
+#if USE_ETH8720 || USE_WIFI
+    emitDtSv(v);
+#endif;
+    DT_SV = "";
 }
 
 String SmartLadderEsp32::getVDS(String port)
 {
-  int x = port[0];
-  port.remove(0, 1);
-  int n = port.toInt();
-  switch (x)
-  {
-  case 'o':
-  case 'i':
-    return String(digitalRead(n));
-  case 'a':
-    return String(atvIADCPort(port));
-  case 'b':
-    return String(B_B[n]);
-  case 'T':
-    return String(getTemp(n));
-  case 'c':
-    return String(getCount(n));
-  }
+    int x = port[0];
+    port.remove(0, 1);
+    int n = port.toInt();
+    switch (x)
+    {
+    case 'o':
+    case 'i':
+        return String(digitalRead(n));
+    case 'a':
+        return String(atvIADCPort(port));
+    case 'b':
+        return String(B_B[n]);
+    case 'T':
+        return String(getTemp(n));
+    case 'c':
+        return String(getCount(n));
+    }
 }

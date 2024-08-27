@@ -3,7 +3,11 @@
 #include <SmartLadderEsp32.h>
 
 #include "proccess/settings/esp32.h"
+
+#if USE_ETH8720 || USE_WIFI
 #include "communication/connection/esp32.h"
+#endif
+
 #include "communication/esp32.h"
 #include "Generic.h"
 #include "proccess/memory/esp32.h"
@@ -15,6 +19,14 @@ void SmartLadderEsp32::setup()
 {
   Serial.begin(115200);
   delay(100);
+  Serial.println(USE_I2C);
+  Serial.println("USE_I2C");
+
+#if USE_ETH8720 || USE_WIFI
+  Serial.println(USE_ETH8720);
+  Serial.println(USE_WIFI);
+  Serial.println("USE_ETH8720");
+#endif
 
   xTaskCreatePinnedToCore(
       [](void *pvParameters)
@@ -47,7 +59,7 @@ void SmartLadderEsp32::loop() {}
 
 void SmartLadderEsp32::Task1code(void *pvParameters)
 {
-  setupConnect();
+  loadConfig();
   for (;;)
   {
     if (DT_SV.length())
@@ -55,7 +67,11 @@ void SmartLadderEsp32::Task1code(void *pvParameters)
 
     if (_TPR == 0 && _ST == 1)
       setStatusResource();
-    conectLoop();
+
+#if USE_ETH8720 || USE_WIFI
+    connectLoop();
+#endif
+
     vTaskDelay(1);
 
     while (Serial.available())

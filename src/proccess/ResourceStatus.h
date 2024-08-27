@@ -37,9 +37,18 @@ bool Generic::atv(String tipoCond, String port, String prop, int s)
         return s;
     }
 
-    if (resource && tCond != 0)
+    if ((resource || port == "0") && tCond != 0)
     {
-        return atvIOPort(resource, tCond, s);
+        if (prop != "")
+        {
+#if USE_I2C
+            return atvIOPortI2c(resource, tCond, prop.c_str(), s);
+#else
+            return s;
+#endif
+        }
+        else
+            return atvIOPort(resource, tCond, s);
     }
     else if (port[0] == 'b')
     {

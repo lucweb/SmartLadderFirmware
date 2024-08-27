@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-#include "Generic.h" 
+#include "Generic.h"
 
 #define VERSION F("v1.0.0")
 
@@ -13,7 +13,7 @@ class SmartLadderArduino : public Generic
 public:
   void setup();
   void loop();
-    
+
 private:
   unsigned long measureCycleTime(void (*func)());
   void declare(int port, char tipePort);
@@ -21,8 +21,8 @@ private:
   int pEEPROM();
   void loadProgram();
   void loadPort();
-  void setEEPROMProgram();
-  void setEEPROMPort();
+  void setConfigProgram();
+  void setConfigPort();
   void startTypeRequest(char e);
   void eR();
   void receiver(char e);

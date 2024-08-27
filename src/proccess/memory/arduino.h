@@ -34,7 +34,7 @@ void SmartLadderArduino::loadProgram()
   delay(5);
 }
 
-void SmartLadderArduino::setEEPROMProgram()
+void SmartLadderArduino::setConfigProgram()
 {
     int q = pEEPROM();
     int c = P_P.length() + q;
@@ -43,7 +43,7 @@ void SmartLadderArduino::setEEPROMProgram()
     EEPROM.write(c, '#');
 }
 
-void SmartLadderArduino::setEEPROMPort()
+void SmartLadderArduino::setConfigPort()
 {
     int c = R_R.length();
     for (int i = 0; i < c; i++)

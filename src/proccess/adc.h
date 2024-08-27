@@ -15,7 +15,7 @@ int Generic::atvIADCPort(String resource)
     else
       p += resource[x];
   }
-
+  
   int i = n.toInt();
   if ((millis() - A_M_S[i]) >= 50)
   {

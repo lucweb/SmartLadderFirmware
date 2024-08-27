@@ -2,6 +2,9 @@
 #define SmartLadderEsp32_h
 
 #include <Arduino.h>
+
+#include "config.h" 
+
 #include "Generic.h"
 
 #define VERSION F("v1.0.0")
@@ -29,32 +32,33 @@ private:
   void ctrlDtSv();
   String getVDS(String port);
 
-  String getScanNetworks();
-  String listSSID();
-  String getDNS();
-  void setDNS();
-  void wifiInit();
+#if USE_ETH8720
+  void connectEth();
+#endif
+
+#if USE_WIFI
+  void getScanNetworks();
+  void checkStatusWifi();
+#endif
+
+#if USE_ETH8720 || USE_WIFI
+
   void emitDtSv(String v);
   void mqttCallback(char *topic, byte *payload, unsigned int length);
   void rMQTT();
-  void connectClientWifi();
-  void reloadWifi();
-  void setupConnect();
-  void hRoot();
-  void getInfo();
-  void hForm();
-  void TempStatusWifi();
-  void vStatusAll();
-  void conectLoop();
-  void checkStatusWifi();
+  void setupMqttConnect();
+  void dataConfig(bool save);
 
-  void connectEeprom();
-  void setEEPROM();
-  boolean compareEeprom(String s, String p, String c);
-  void setEEPROMProgram();
-  void setEEPROMPort();
+  void TempStatusConnect();
+  void vStatusAll();
+  void connectLoop();
+#endif
+
+  void setConfig();
+  void setConfigProgram();
+  void setConfigPort();
   void loadProgram();
   void loadPort();
+  void loadConfig();
 };
-
 #endif

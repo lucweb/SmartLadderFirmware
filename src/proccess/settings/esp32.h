@@ -2,7 +2,6 @@
 
 void SmartLadderEsp32::declare(int port, char tipePort)
 {
-  Serial.println(String(port) + '-' + String(tipePort));
   if (tipePort == 'i')
     pinMode(port, INPUT);
   else if (tipePort == 'o')
@@ -31,8 +30,7 @@ void SmartLadderEsp32::declareDAC(String d)
       r += d[x];
   }
 
-  ledcAttachPin(p.toInt(), c.toInt());
-  ledcSetup(c.toInt(), f.toInt(), r.toInt());
+  ledcAttach(p.toInt(), f.toInt(), r.toInt());
 }
 
 void SmartLadderEsp32::typePort()
@@ -40,7 +38,12 @@ void SmartLadderEsp32::typePort()
   String p = "";
   for (int x = 0; x < R_R.length(); x++)
   {
-    if (R_R[x] != 'i' && R_R[x] != 'o' && R_R[x] != 'a' && R_R[x] != 'd')
+    if (
+        R_R[x] != 'i' &&
+        R_R[x] != 'o' &&
+        R_R[x] != 'a' &&
+        R_R[x] != 'd' &&
+        R_R[x] != 'w')
       p += R_R[x];
     else if (R_R[x] == 'a')
     {
@@ -49,6 +52,14 @@ void SmartLadderEsp32::typePort()
     else if (R_R[x] == 'd')
     {
       declareDAC(p);
+      p = "";
+    }
+    else if (R_R[x] == 'w')
+    {
+
+#if USE_I2C
+      declareWIRE(p.c_str());
+#endif
       p = "";
     }
     else

@@ -55,3 +55,25 @@ void setup() {
 
 void loop() {}
 ````
+
+
+# SmartLadder Firmware Configuration
+
+## IMPORTANT: Configuration File Required
+
+By default, Wi-Fi are enabled in the firmware esp32. If you need to modify these settings, or if you want to enable/disable Ethernet (LAN8720) support and I2C, you must configure the `config.h` file accordingly.
+
+### Default Settings
+
+- **USE_WIFI**: Set to `1` to enable Wi-Fi support, or `0` to disable it.
+- **USE_I2C**: Set to `1` to enable I2C support, or `0` to disable it.
+- **USE_ETH8720**: Set to `1` to enable Ethernet support (LAN8720), or `0` to disable it.
+
+### File Location
+
+The configuration file `config.h` should be located in the same directory as your sketch or within the library's directory structure.
+
+**Example path**:  
+`../documents/Arduino/libraries/SmartLadderFirmware/config.h`
+
+Make sure to adjust these definitions to match your hardware setup and project requirements.

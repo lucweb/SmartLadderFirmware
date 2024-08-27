@@ -57,7 +57,7 @@ void SmartLadderArduino::eR()
     {
         emit(String(P_P.length()));
         if (_TPR == 0x40)
-            setEEPROMProgram();
+            setConfigProgram();
     }
     else if (_TPR == 0x24)
     {
@@ -69,7 +69,7 @@ void SmartLadderArduino::eR()
         typePort();
         emit(String(R_R.length()));
         if (_TPR == 0x2A)
-            setEEPROMPort();
+            setConfigPort();
     }
     else if (_TPR == 0x63)
     {
@@ -110,7 +110,6 @@ void SmartLadderArduino::emitDigitalRead()
             p = "";
         }
     }
-    // Serial.print(v + '-' + va + '-');
     emit(v + '-');
     emit(va + '-');
 }
