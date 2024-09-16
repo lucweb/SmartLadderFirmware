@@ -89,7 +89,7 @@ void SmartLadderArduino::eR()
 void SmartLadderArduino::emitDigitalRead()
 {
     String p = "";
-    String v = String('>' + 's');
+    String v = String(F(">s"));
     String va = "";
     for (int x = 0; x < R_R.length(); x++)
     {
@@ -128,7 +128,7 @@ void SmartLadderArduino::setStatusResource()
 
     emit(F("-"));
     for (int x = 0; x < 20; x++)
-        emit(String(B_B[x] ? 1 : 0));
-
+        emit(String(B_B[x])+':');
+        
     emit(F("<"));
 }

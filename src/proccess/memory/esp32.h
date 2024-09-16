@@ -14,7 +14,6 @@ void SmartLadderEsp32::loadConfig()
     file.close();
   }
   SPIFFS.end();
-  Serial.println(TEMP_);
 #if USE_ETH8720 || USE_WIFI
   if (TEMP_)
     dataConfig();
@@ -49,7 +48,6 @@ void SmartLadderEsp32::setConfigPort()
   wFile.println(R_R.c_str());
   wFile.close();
   SPIFFS.end();
-  Serial.println(R_R);
 }
 
 void SmartLadderEsp32::loadProgram()
@@ -64,7 +62,6 @@ void SmartLadderEsp32::loadProgram()
     file.close();
   }
   SPIFFS.end();
-  Serial.println(P_P);
   emit(P_P);
 }
 
@@ -81,5 +78,4 @@ void SmartLadderEsp32::loadPort()
   }
   SPIFFS.end();
   typePort();
-  Serial.println(R_R);
 }

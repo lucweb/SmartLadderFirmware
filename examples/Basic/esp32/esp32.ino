@@ -17,7 +17,6 @@
 // as this sketch or in the library's directory structure.
 // ../documents/Arduino/libraries/SmartLadderFirmware/config.h
 // ********************************************************************
-
 #include <SmartLadderEsp32.h>
 
 SmartLadderEsp32 smartLadder;

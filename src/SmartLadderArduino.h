@@ -5,8 +5,6 @@
 
 #include "Generic.h"
 
-#define VERSION F("v1.0.0")
-
 class SmartLadderArduino : public Generic
 {
 

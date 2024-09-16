@@ -145,8 +145,8 @@ void SmartLadderEsp32::setStatusResource()
         emit(String(getCount(x)) + ':');
 
     emit(F("-"));
-    for (int x = 0; x < 20; x++)
-        emit(String(B_B[x] ? 1 : 0));
+    for (int x = 0; x < 30; x++)
+        emit(String(B_B[x])+':');
 
     emit(F("<"));
 }

@@ -1,7 +1,7 @@
 #include "Generic.h"
 
 bool Generic::atv(String tipoCond, String port, String prop, int s)
-{
+{    
     int tCond = tipoCond.toInt();
     int resource = port.toInt();
 
@@ -66,8 +66,6 @@ bool Generic::atv(String tipoCond, String port, String prop, int s)
     {
         return setEqual(tipoCond.c_str(), port.c_str(), prop.c_str());
     }
-
-    // if (port[0] == 'A' || port[0] == 'a') {}
 
     return s;
 }

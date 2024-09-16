@@ -6,7 +6,6 @@
 
 #if USE_I2C
 #include <Wire.h>
-static char DELIMITER[] = "-";
 #endif
 
 class Generic
@@ -19,8 +18,8 @@ public:
 
   String R_R, P_P, F_F, TD_TD, DT_SV;
 
-  int T_AD_V[18], CT_CT[30];
-  long int TL_TL[30], A_M_S[18];
+  int T_AD_V[20];
+  long int TL_TL[30], A_M_S[20], CT_CT[30];
   byte B_B[30], _ST, _TPR, C_CCCTU[30], C_CCCTD[30], DT_SV_S[20];
 
   int atvIADCPort(String resource);

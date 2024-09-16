@@ -7,8 +7,6 @@
 
 #include "Generic.h"
 
-#define VERSION F("v1.0.0")
-
 class SmartLadderEsp32 : public Generic
 {
 

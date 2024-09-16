@@ -19,14 +19,6 @@ void SmartLadderEsp32::setup()
 {
   Serial.begin(115200);
   delay(100);
-  Serial.println(USE_I2C);
-  Serial.println("USE_I2C");
-
-#if USE_ETH8720 || USE_WIFI
-  Serial.println(USE_ETH8720);
-  Serial.println(USE_WIFI);
-  Serial.println("USE_ETH8720");
-#endif
 
   xTaskCreatePinnedToCore(
       [](void *pvParameters)

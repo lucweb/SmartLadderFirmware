@@ -2,7 +2,6 @@
 
 void Generic::startWire(TwoWire &i2c, int sda, int scl)
 {
-  
 #if defined(ESP32)
   i2c.begin(sda, scl);
 #else
@@ -12,14 +11,24 @@ void Generic::startWire(TwoWire &i2c, int sda, int scl)
 
 int Generic::getBytes(char *bits, int *buffer)
 {
-  int byteCount = 0;
-  char *endBits = strtok(bits, DELIMITER);
-  while (endBits != NULL)
+  size_t length = strlen(bits);
+  int x = 0;
+  String v = "";
+  for (int i = 0; i < length; i++)
   {
-    buffer[byteCount++] = atoi(endBits);
-    endBits = strtok(NULL, DELIMITER);
+
+    if (bits[i] == '-' || (i + 1) == length)
+    {
+      if (bits[i] != '-')
+        v += bits[i];
+      buffer[x] = v.toInt();
+      v = "";
+      x++;
+    }
+    else
+      v += bits[i];
   }
-  return byteCount;
+  return x;
 }
 
 void Generic::setConfigI2c(TwoWire &i2c, int address, char *dados, char *bits)
@@ -29,14 +38,21 @@ void Generic::setConfigI2c(TwoWire &i2c, int address, char *dados, char *bits)
 
   i2c.beginTransmission(address);
 
-  int byteCount = 0;
-  char *token = strtok(dados, DELIMITER);
-  while (token != NULL)
+  size_t length = strlen(bits);
+  int x = 0;
+  String v = "";
+  for (int i = 0; i < length; i++)
   {
-    uint8_t data = (uint8_t)atoi(token);
-    B_B[buffer[byteCount++]] = data;
-    i2c.write(data);
-    token = strtok(NULL, DELIMITER);
+    if (bits[i] == '-' || (i + 1) == length)
+    {
+      uint8_t data = (uint8_t)v.toInt();
+      B_B[buffer[x++]] = data;
+      i2c.write(data);
+      v = "";
+      x++;
+    }
+    else
+      v += bits[i];
   }
 
   i2c.endTransmission();
@@ -103,41 +119,46 @@ void Generic::updatePinI2c(TwoWire &i2c, int address, int pin, bool state, char 
 
 void Generic::declareWIRE(const char *prop)
 {
-  char *modifiableProp = strdup(prop);
-  if (modifiableProp == nullptr)
-    return;
+#if defined(ESP32)
+  char numI2c = '0';
+  String v2 = "";
+  String v3 = "";
+  String v4 = "";
+  String v5 = "";
+  String v6 = "";
 
-  char *bytes;
-  char *data;
-  int numI2c;
-  int address;
-  int sda;
-  int scl;
-
-  const char delimiter[] = "/";
-
+  size_t length = strlen(prop);
   int x = 0;
-  char *endBits = strtok(modifiableProp, delimiter);
-
-  while (endBits != NULL)
+  for (int i = 0; i < length; i++)
   {
-    if (x == 0)
-      numI2c = atoi(endBits);
+    if (prop[i] == '/')
+      x++;
+    else if (x == 0)
+      numI2c = prop[i];
     else if (x == 1)
-      address = atoi(endBits);
+      v2 += prop[i];
     else if (x == 2)
-      sda = atoi(endBits);
+      v3 += prop[i];
     else if (x == 3)
-      scl = atoi(endBits);
+      v4 += prop[i];
     else if (x == 4)
-      data = endBits;
+      v5 += prop[i];
     else if (x == 5)
-      bytes = endBits;
-    x++;
-    endBits = strtok(NULL, delimiter);
+      v6 += prop[i];
   }
-  startWire((numI2c == 0 ? I2C_1 : I2C_2), sda, scl);
-  setConfigI2c((numI2c == 0 ? I2C_1 : I2C_2), address, data, bytes);
 
-  free(modifiableProp);
+  int address = v2.toInt();
+  int sda = v3.toInt();
+  int scl = v4.toInt();
+  char *data = strdup(v5.c_str());
+  char *bytes = strdup(v6.c_str());
+
+  startWire((numI2c == '0' ? I2C_1 : I2C_2), sda, scl);
+  setConfigI2c((numI2c == '0' ? I2C_1 : I2C_2), address, data, bytes);
+
+  free(data);
+  free(bytes);
+#else
+  I2C_1.begin();
+#endif
 }

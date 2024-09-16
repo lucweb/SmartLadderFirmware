@@ -36,18 +36,18 @@ void SmartLadderArduino::loadProgram()
 
 void SmartLadderArduino::setConfigProgram()
 {
-    int q = pEEPROM();
-    int c = P_P.length() + q;
-    for (int i = q; i < c; i++)
-        EEPROM.write(i, P_P[i - q]);
-    EEPROM.write(c, '#');
+  int q = pEEPROM();
+  int c = P_P.length() + q;
+  for (int i = q; i < c; i++)
+    EEPROM.write(i, P_P[i - q]);
+  EEPROM.write(c, '#');
 }
 
 void SmartLadderArduino::setConfigPort()
 {
-    int c = R_R.length();
-    for (int i = 0; i < c; i++)
-        EEPROM.write(i, R_R[i]);
-    EEPROM.write(c, '#');
-    typePort();
+  int c = R_R.length();
+  for (int i = 0; i < c; i++)
+    EEPROM.write(i, R_R[i]);
+  EEPROM.write(c, '#');
+  typePort();
 }
