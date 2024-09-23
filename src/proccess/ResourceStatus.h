@@ -1,7 +1,7 @@
 #include "Generic.h"
 
 bool Generic::atv(String tipoCond, String port, String prop, int s)
-{    
+{
     int tCond = tipoCond.toInt();
     int resource = port.toInt();
 
@@ -20,7 +20,9 @@ bool Generic::atv(String tipoCond, String port, String prop, int s)
     case 12:
         return atvCountDown(port.c_str(), tCond, prop.c_str(), s);
     case 14:
-        return stepper(resource, prop);
+        if (s)
+            return stepper(resource, prop);
+        return s;
     case 13:
 #if defined(ESP32)
         int t = prop.toInt();
