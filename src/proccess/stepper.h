@@ -62,6 +62,7 @@ bool Generic::asyncStepper(int pin, int v, int totalSteps, int c)
     digitalWrite(pin, 1);
     delayMicroseconds(v);
     digitalWrite(pin, 0);
+    delayMicroseconds(v);
     CT_CT[c]++;
   }
   return true;
