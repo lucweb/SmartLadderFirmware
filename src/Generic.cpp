@@ -9,6 +9,7 @@
 #include "proccess/time.h"
 #include "proccess/dac.h"
 #include "proccess/adc.h"
+#include "proccess/set.h"
 
 
 #if USE_I2C

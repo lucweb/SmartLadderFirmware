@@ -23,6 +23,10 @@ bool Generic::atv(String tipoCond, String port, String prop, int s)
         if (s)
             return stepper(resource, prop);
         return s;
+    case 15:
+        if (s)
+            atvSet(port.c_str(), prop.c_str());
+        return s;
     case 13:
 #if defined(ESP32)
         int t = prop.toInt();
@@ -66,7 +70,9 @@ bool Generic::atv(String tipoCond, String port, String prop, int s)
     }
     else if (tCond == 0)
     {
-        return setEqual(tipoCond.c_str(), port.c_str(), prop.c_str());
+        if (s)
+            return setEqual(tipoCond.c_str(), port.c_str(), prop.c_str());
+        return s;
     }
 
     return s;

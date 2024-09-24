@@ -11,10 +11,10 @@ bool Generic::setCount(int i, int t)
   {
     C_CCCTU[i] = 1;
     CT_CT[i]++;
-    if (CT_CT[i] == t)
+    if (CT_CT[i] >= t)
       CT_CT[i] = -CT_CT[i];
   }
-  return getCount(i) == t;
+  return getCount(i) >= t;
 }
 
 void Generic::resetCount(int i)

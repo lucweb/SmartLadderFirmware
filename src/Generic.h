@@ -41,6 +41,7 @@ public:
   bool atv(String tipoCond, String port, String prop, int s);
   int checkStatus(const char *port);
   bool setEqual(const char *tipoCond, const char *sA, const char *sB);
+  void atvSet(const char *port, const char *value);
   int getCount(int i);
   bool setCount(int i, int t);
   void resetCount(int i);
