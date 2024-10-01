@@ -8,10 +8,11 @@
 #include <WiFi.h>
 #endif
 
+#if USE_ETH8720 || USE_WIFI
 #include <PubSubClient.h>
-
 const char *BROKER_MQTT = "mqtt.smartladder.io";
 int BROKER_PORT = 1883;
+#endif
 
 #if USE_WIFI
 WiFiClient client;
@@ -79,6 +80,7 @@ void SmartLadderEsp32::vStatusAll()
         rMQTT();
 }
 
+#if USE_ETH8720 || USE_WIFI
 void SmartLadderEsp32::emitDtSv(String v)
 {
     MQTT.publish((CODE_ + String(F("_dt"))).c_str(), v.c_str());
@@ -156,3 +158,5 @@ void SmartLadderEsp32::connectLoop()
     TempStatusConnect();
     MQTT.loop();
 }
+
+#endif

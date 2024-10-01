@@ -179,7 +179,7 @@ void SmartLadderEsp32::ctrlDtSv()
     }
 #if USE_ETH8720 || USE_WIFI
     emitDtSv(v);
-#endif;
+#endif
     DT_SV = "";
 }
 
@@ -202,4 +202,5 @@ String SmartLadderEsp32::getVDS(String port)
     case 'c':
         return String(getCount(n));
     }
+    return "";
 }
