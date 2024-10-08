@@ -2,7 +2,6 @@
 
 void Generic::start()
 {
-  // P_P = "l6:T0:2000;9:T0;l-:1000:/T0;3:12;3:7:0/37/0;13:1|o12:0;";
   byte state = 0;
   String param1 = "";
   String param2 = "";
@@ -10,7 +9,7 @@ void Generic::start()
   int delimiterCount = 0;
   bool isLoop = false;
 
-  for (int i = 0; i < P_P.length(); i++) {
+  for (size_t i = 0; i < P_P.length(); i++) {
     char currentChar = P_P[i];
 
     if (currentChar == '>') {

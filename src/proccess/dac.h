@@ -9,7 +9,7 @@ int Generic::atvIDACPort(int resource, const char *value)
   String v3 = "";
   String v4 = "";
 
-  for (int i = 0; i < strlen(value); i++)
+  for (size_t i = 0; i < strlen(value); i++)
   {
     if (value[i] == '/')
       p++;
@@ -56,7 +56,7 @@ int Generic::atvIDACPort(int resource, const char *value)
   char v2[6] = {0};
   char v3[6] = {0};
   int index = 0;
-  for (int i = 0; i < strlen(value); i++)
+  for (size_t i = 0; i < strlen(value); i++)
   {
     if (value[i] == '/')
     {

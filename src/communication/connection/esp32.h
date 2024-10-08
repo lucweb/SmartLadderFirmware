@@ -30,7 +30,7 @@ void SmartLadderEsp32::getScanNetworks()
 {
     String networks = "";
     int n = WiFi.scanNetworks();
-    for (int i = 0; i < n; ++i)
+    for (size_t i = 0; i < n; ++i)
         networks += WiFi.SSID(i) + '|';
     emit(networks);
 }
@@ -89,7 +89,7 @@ void SmartLadderEsp32::emitDtSv(String v)
 void SmartLadderEsp32::mqttCallback(char *topic, byte *payload, unsigned int length)
 {
     ORIGIN_ = 0;
-    for (int i = 0; i < length; i++)
+    for (size_t i = 0; i < length; i++)
         receiver((char)payload[i]);
 }
 
@@ -124,7 +124,7 @@ void SmartLadderEsp32::dataConfig(bool bSave = false)
     CODE_ = "";
     TEMP_.trim();
     int i = 0;
-    for (int x = 0; x < TEMP_.length(); x++)
+    for (size_t x = 0; x < TEMP_.length(); x++)
     {
         if (TEMP_[x] == '|')
             i++;

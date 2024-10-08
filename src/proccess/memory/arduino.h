@@ -4,7 +4,7 @@
 void SmartLadderArduino::loadPort()
 {
   R_R = "";
-  for (int i = 0; i < 1024; i++)
+  for (size_t i = 0; i < 1024; i++)
   {
     char d = (char)EEPROM.read(i);
     if (d == '#' || d == '\0' || (d != '0' && !d))

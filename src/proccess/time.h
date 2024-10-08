@@ -5,7 +5,7 @@ int Generic::getTemp(int x)
   return TL_TL[x] > 0 ? (millis() - TL_TL[x]) : (TL_TL[x] < 0 ? abs(TL_TL[x]) : 0);
 }
 
-void Generic::loopTemp(int t, int qt)
+void Generic::loopTemp(int t, unsigned long qt)
 {
   if (millis() - TL_TL[t] >= qt)
     TL_TL[t] = -qt;

@@ -12,14 +12,14 @@ void SmartLadderArduino::declare(int port, char tipePort)
 void SmartLadderArduino::typePort()
 {
   String p = "";
-  for (int x = 0; x < R_R.length(); x++)
+  for (size_t x = 0; x < R_R.length(); x++)
   {
     if (R_R[x] != 'i' && R_R[x] != 'o' && R_R[x] != 'd' && R_R[x] != 'a' && R_R[x] != 'w')
       p += R_R[x];
     else if (R_R[x] == 'w')
     {
 #if USE_I2C
-      declareWIRE(p.c_str());
+      I2C_1.begin();
 #endif
       p = "";
     }

@@ -34,7 +34,7 @@ int Generic::setCountDown(int i, int t)
   return getCount(i) == 0;
 }
 
-bool Generic::atvCountDown(const char* port, int tCond, const char* prop, int s)
+bool Generic::atvCountDown(const char* port, const char* prop, int s)
 {
     int t = atoi(port + 1); 
     bool r = (s) ? setCountDown(t, atoi(prop)) : 0;

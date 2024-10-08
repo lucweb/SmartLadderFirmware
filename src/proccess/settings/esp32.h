@@ -16,7 +16,7 @@ void SmartLadderEsp32::declareDAC(String d)
   String f = "";
   String r = "";
   int i = 0;
-  for (int x = 0; x < d.length(); x++)
+  for (size_t x = 0; x < d.length(); x++)
   {
     if (d[x] == ':')
       i++;
@@ -36,7 +36,7 @@ void SmartLadderEsp32::declareDAC(String d)
 void SmartLadderEsp32::typePort()
 {
   String p = "";
-  for (int x = 0; x < R_R.length(); x++)
+  for (size_t x = 0; x < R_R.length(); x++)
   {
     if (
         R_R[x] != 'i' &&

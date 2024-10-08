@@ -6,7 +6,7 @@ int Generic::atvIADCPort(String resource)
   String n = "";
   String p = "";
   bool init = false;
-  for (int x = 0; x < resource.length(); x++)
+  for (size_t x = 0; x < resource.length(); x++)
   {
     if (resource[x] == '-')
       init = true;

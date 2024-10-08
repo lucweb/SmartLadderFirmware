@@ -8,7 +8,7 @@ bool Generic::atvIOPortI2c(int resource, int tCond, const char *prop, int s)
 
   size_t length = strlen(prop);
   int x = 0;
-  for (int i = 0; i < length; i++)
+  for (size_t i = 0; i < length; i++)
   {
 
     if (prop[i] == '/')

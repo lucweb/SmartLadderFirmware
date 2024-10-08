@@ -9,7 +9,7 @@ bool Generic::stepper(int resource, String values)
   char v4 = '0';
   int vIndex = 0;
 
-  for (int i = 0; i < values.length(); i++)
+  for (size_t i = 0; i < values.length(); i++)
   {
     if (values[i] == '/')
     {

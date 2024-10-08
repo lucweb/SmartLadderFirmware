@@ -1,20 +1,18 @@
 #include "Generic.h"
 
+#if defined(ESP32)
 void Generic::startWire(TwoWire &i2c, int sda, int scl)
 {
-#if defined(ESP32)
   i2c.begin(sda, scl);
-#else
-  i2c.begin();
-#endif
 }
+#endif
 
 int Generic::getBytes(char *bits, int *buffer)
 {
   size_t length = strlen(bits);
   int x = 0;
   String v = "";
-  for (int i = 0; i < length; i++)
+  for (size_t i = 0; i < length; i++)
   {
 
     if (bits[i] == '-' || (i + 1) == length)
@@ -36,25 +34,22 @@ void Generic::setConfigI2c(TwoWire &i2c, int address, char *dados, char *bits)
   int buffer[4];
   getBytes(bits, buffer);
 
+  int bufferD[4];
+  getBytes(dados, bufferD);
+
   i2c.beginTransmission(address);
 
   size_t length = strlen(bits);
   int x = 0;
-  String v = "";
-  for (int i = 0; i < length; i++)
+  for (size_t i = 0; i < length; i++)
   {
     if (bits[i] == '-' || (i + 1) == length)
     {
-      uint8_t data = (uint8_t)v.toInt();
-      B_B[buffer[x++]] = data;
-      i2c.write(data);
-      v = "";
+      B_B[buffer[x]] = (uint8_t)bufferD[x];
+      i2c.write(bufferD[x]);
       x++;
     }
-    else
-      v += bits[i];
   }
-
   i2c.endTransmission();
 }
 
@@ -117,9 +112,10 @@ void Generic::updatePinI2c(TwoWire &i2c, int address, int pin, bool state, char 
   i2c.endTransmission();
 }
 
+
+#if defined(ESP32)
 void Generic::declareWIRE(const char *prop)
 {
-#if defined(ESP32)
   char numI2c = '0';
   String v2 = "";
   String v3 = "";
@@ -158,7 +154,28 @@ void Generic::declareWIRE(const char *prop)
 
   free(data);
   free(bytes);
-#else
-  I2C_1.begin();
+}
 #endif
+
+void Generic::scanI2C(TwoWire &i2c)
+{
+  byte error, address;
+  int nDevices = 0;
+  for (address = 0x01; address < 0x7f; address++)
+  {
+    i2c.beginTransmission(address);
+    error = i2c.endTransmission();
+    if (error == 0)
+    {
+      Serial.print(address);
+      nDevices++;
+    }
+    else if (error != 2)
+    {
+      Serial.print('e');
+      Serial.print(address);
+    }
+  }
+  if (nDevices == 0)
+    Serial.print('n');
 }

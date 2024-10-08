@@ -18,7 +18,7 @@ bool Generic::atv(String tipoCond, String port, String prop, int s)
         atvIDACPort(resource, prop.c_str());
         return s;
     case 12:
-        return atvCountDown(port.c_str(), tCond, prop.c_str(), s);
+        return atvCountDown(port.c_str(), prop.c_str(), s);
     case 14:
         if (s)
             return stepper(resource, prop);

@@ -21,12 +21,14 @@ public:
   int T_AD_V[20];
   long int TL_TL[30], A_M_S[20], CT_CT[30];
   byte B_B[30], _ST, _TPR, C_CCCTU[30], C_CCCTD[30], DT_SV_S[20];
+  uint16_t A_D[30];
 
   int atvIADCPort(String resource);
 #else
   String P_P, F_F, R_R, TD_TD;
   long int TL_TL[10], CT_CT[10];
   byte B_B[20], _ST, _TPR, C_CCCTU[10], C_CCCTD[10];
+  uint16_t A_D[30];
   int atvIADCPort(int resource);
 #endif
 
@@ -47,21 +49,19 @@ public:
   void resetCount(int i);
   int setCountDown(int i, int t);
   int getTemp(int x);
-  void loopTemp(int t, int qt);
+  void loopTemp(int t, unsigned long qt);
   void resetTemp(int t);
   bool validaTemp(int t, int qt);
   bool atvTime(const char *port, int tCond, const char *prop, int s);
   bool atvCount(const char *port, int tCond, const char *prop, int s);
-  bool atvCountDown(const char *port, int tCond, const char *prop, int s);
+  bool atvCountDown(const char *port, const char *prop, int s);
   bool atvIOPort(int resource, int tCond, int s);
   int atvIDACPort(int resource, const char *value);
 
 #if USE_I2C
-  void declareWIRE(const char *prop);
 
   bool atvIOPortI2c(int resource, int tCond, const char *prop, int s);
-
-  void startWire(TwoWire &i2c, int sda, int scl);
+  void scanI2C(TwoWire &i2c);
   int getBytes(char *bits, int *buffer);
   void setConfigI2c(TwoWire &i2c, int address, char *dados, char *bits);
   uint32_t getPinStateReal(TwoWire &i2c, int address, char *bits);
@@ -69,6 +69,8 @@ public:
   void updatePinI2c(TwoWire &i2c, int address, int pin, bool state, char *bits);
 
 #if defined(ESP32)
+  void startWire(TwoWire &i2c, int sda, int scl);
+  void declareWIRE(const char *prop);
   TwoWire I2C_1 = TwoWire(0);
   TwoWire I2C_2 = TwoWire(1);
 #else

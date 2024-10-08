@@ -109,7 +109,7 @@ void SmartLadderEsp32::emitDigitalRead()
     String p = "";
     String v = ">s";
     String va = "";
-    for (int x = 0; x < R_R.length(); x++)
+    for (size_t x = 0; x < R_R.length(); x++)
     {
         if (R_R[x] != 'i' && R_R[x] != 'o' && R_R[x] != 'a' && R_R[x] != 'd')
             p += R_R[x];

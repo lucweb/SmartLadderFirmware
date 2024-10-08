@@ -3,7 +3,7 @@
 bool Generic::isForce(int i, char tipo)
 {
   String fMsg = "";
-  for (int x = 0; x < F_F.length(); x++)
+  for (size_t x = 0; x < F_F.length(); x++)
   {
     if (F_F[x] != ';')
       fMsg += F_F[x];
@@ -22,7 +22,7 @@ bool Generic::isForce(int i, char tipo)
 void Generic::setForce(String m)
 {
   String b = "";
-  for (int i = 2; i < m.length(); i++)
+  for (size_t i = 2; i < m.length(); i++)
     b += m[i];
   int isBit = b.indexOf('b');
   if (isBit >= 0)
@@ -37,7 +37,7 @@ void Generic::setForce(String m)
 void Generic::upForce()
 {
   String F_FMsg = "";
-  for (int x = 0; x < F_F.length(); x++)
+  for (size_t x = 0; x < F_F.length(); x++)
   {
     if (F_F[x] != ';')
       F_FMsg += F_F[x];
