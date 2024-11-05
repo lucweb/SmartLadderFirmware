@@ -1,7 +1,7 @@
 #ifndef config_H
 #define config_H
 
-#define VERSION F("v1.0.0")
+#define VERSION F("v1.0.1")
 
 // Define whether I2C functionality should be enabled (1) or disabled (0)
 #define USE_I2C 1

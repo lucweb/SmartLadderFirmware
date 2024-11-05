@@ -6,7 +6,8 @@
 
 ## Version
 
-Current: v1.0.0
+first: v1.0.0
+Current: v1.0.1
 
 ## Installation
 
