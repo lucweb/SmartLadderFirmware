@@ -10,6 +10,9 @@
 #include "proccess/dac.h"
 #include "proccess/adc.h"
 #include "proccess/set.h"
+#include "proccess/pUpDown.h"
+#include "proccess/calc.h"
+
 
 
 #if USE_I2C

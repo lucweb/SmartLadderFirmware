@@ -31,4 +31,7 @@
 *.out
 *.app
 
-test\mocks
+/test/mocks
+/.vscode
+
+*.txt

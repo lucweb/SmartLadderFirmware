@@ -31,15 +31,15 @@ int Generic::getBytes(char *bits, int *buffer)
 
 void Generic::setConfigI2c(TwoWire &i2c, int address, char *dados, char *bits)
 {
-  int buffer[4];
+  size_t length = strlen(bits);
+  int buffer[length];
   getBytes(bits, buffer);
 
-  int bufferD[4];
+  int bufferD[length];
   getBytes(dados, bufferD);
 
   i2c.beginTransmission(address);
 
-  size_t length = strlen(bits);
   int x = 0;
   for (size_t i = 0; i < length; i++)
   {
@@ -53,11 +53,13 @@ void Generic::setConfigI2c(TwoWire &i2c, int address, char *dados, char *bits)
   i2c.endTransmission();
 }
 
-uint32_t Generic::getPinStateReal(TwoWire &i2c, int address, char *bits)
+uint32_t Generic::getPinStateReal(TwoWire &i2c, int address, char *bits, int anl)
 {
-  int buffer[4];
+  size_t length = strlen(bits);
+  int buffer[length];
   int bytes = getBytes(bits, buffer);
   i2c.requestFrom(address, bytes);
+
   if (i2c.available() == bytes)
   {
     uint32_t combinedState = 0;
@@ -65,27 +67,42 @@ uint32_t Generic::getPinStateReal(TwoWire &i2c, int address, char *bits)
     {
       uint8_t data = i2c.read();
       B_B[buffer[i]] = data;
-      combinedState |= (uint32_t)data << (8 * i);
+
+      if (i > anl)
+        combinedState |= (uint32_t)data << (8 * i);
     }
     return combinedState;
   }
   uint32_t historicalState = 0;
   for (int i = 0; i < bytes; i++)
   {
-    historicalState |= (uint32_t)B_B[buffer[i]] << (8 * i);
+    if (i > anl)
+      historicalState |= (uint32_t)B_B[buffer[i]] << (8 * i);
   }
   return historicalState;
 }
 
 bool Generic::checkPinStateI2c(TwoWire &i2c, int address, int pinNumber, char *bits)
 {
-  uint32_t combinedState = getPinStateReal(i2c, address, bits);
+  uint32_t combinedState = getPinStateReal(i2c, address, bits, -1);
   return (combinedState & (1 << pinNumber)) != 0;
+}
+
+uint16_t Generic::getAnalogicValueI2c(TwoWire &i2c, int address, char *bits, int b1, int b2, int anl)
+{
+  getPinStateReal(i2c, address, bits, anl);
+  return (B_B[b1] << 8) | B_B[b2];
 }
 
 void Generic::updatePinI2c(TwoWire &i2c, int address, int pin, bool state, char *bits)
 {
-  int buffer[4];
+  updatePinI2cAll(i2c, address, pin, state, bits, -1, -1);
+}
+
+void Generic::updatePinI2cAll(TwoWire &i2c, int address, int pin, bool state, char *bits, int pin2, int v)
+{
+  size_t length = strlen(bits);
+  int buffer[length];
   int bytes = getBytes(bits, buffer);
 
   if (pin < 0 || pin >= (8 * bytes))
@@ -94,13 +111,21 @@ void Generic::updatePinI2c(TwoWire &i2c, int address, int pin, bool state, char 
     return;
   }
 
-  int byteIndex = pin / 8;
-  int bitIndex = pin % 8;
+  if (pin2 == -1)
+  {
+    int byteIndex = pin / 8;
+    int bitIndex = pin % 8;
 
-  if (state)
-    B_B[buffer[byteIndex]] |= (1 << bitIndex);
+    if (state)
+      B_B[buffer[byteIndex]] |= (1 << bitIndex);
+    else
+      B_B[buffer[byteIndex]] &= ~(1 << bitIndex);
+  }
   else
-    B_B[buffer[byteIndex]] &= ~(1 << bitIndex);
+  {
+    B_B[pin] = (v >> 8) & 0xFF;
+    B_B[pin2] = v & 0xFF;
+  }
 
   i2c.beginTransmission(address);
 
@@ -111,7 +136,6 @@ void Generic::updatePinI2c(TwoWire &i2c, int address, int pin, bool state, char 
 
   i2c.endTransmission();
 }
-
 
 #if defined(ESP32)
 void Generic::declareWIRE(const char *prop)
@@ -168,6 +192,7 @@ void Generic::scanI2C(TwoWire &i2c)
     if (error == 0)
     {
       Serial.print(address);
+      Serial.print('-');
       nDevices++;
     }
     else if (error != 2)

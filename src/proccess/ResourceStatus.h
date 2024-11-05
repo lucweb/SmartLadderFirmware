@@ -27,6 +27,15 @@ bool Generic::atv(String tipoCond, String port, String prop, int s)
         if (s)
             atvSet(port.c_str(), prop.c_str());
         return s;
+    case 16:
+    case 17:
+        if (s)
+            return atvPUpDown(tCond, port.c_str(), prop.c_str());
+        return s;
+    case 18:
+        if (s)
+            setCalc(port.c_str(), prop.c_str());
+        return s;
     case 13:
 #if defined(ESP32)
         int t = prop.toInt();

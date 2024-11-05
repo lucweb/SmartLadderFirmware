@@ -1,8 +1,8 @@
 #include "Generic.h"
 
-bool Generic::atvIOBit(const char* port, int tCond, int s)
+bool Generic::atvIOBit(const char *port, int tCond, int s)
 {
-    int b = atoi(port + 1); 
+    int b = atoi(port + 1);
 
     switch (tCond)
     {
@@ -29,6 +29,10 @@ bool Generic::atvIOBit(const char* port, int tCond, int s)
             if (s)
                 B_B[b] = 0;
         }
+        break;
+    case 9:
+        if (s)
+            B_B[b] = 0;
         break;
     }
     return s;

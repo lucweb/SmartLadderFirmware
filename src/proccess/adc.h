@@ -15,16 +15,21 @@ int Generic::atvIADCPort(String resource)
     else
       p += resource[x];
   }
-  
+
   int i = n.toInt();
-  if ((millis() - A_M_S[i]) >= 50)
+  if ((millis() - A_M_S[i]) >= 30)
   {
-    T_AD_V[i] = analogRead(p.toInt());
+    if (!A_D[i])
+      A_D[i] = 0;
+
+    int value = analogRead(p.toInt());
+    const float fs = 0.05;
+    A_D[i] = value * fs + A_D[i] * (1 - fs);
     A_M_S[i] = 0;
   }
   if (A_M_S[i] == 0)
     A_M_S[i] = millis();
-  return T_AD_V[i];
+  return A_D[i];
 }
 #elif defined(ESP8266)
 int Generic::atvIADCPort(int resource)
