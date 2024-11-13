@@ -23,19 +23,6 @@ void SmartLadderEsp32::setup()
   xTaskCreatePinnedToCore(
       [](void *pvParameters)
       {
-        static_cast<SmartLadderEsp32 *>(pvParameters)->Task2code(pvParameters);
-      },
-      "Task2",
-      25000,
-      this,
-      1,
-      &Task2,
-      1);
-  delay(500);
-
-  xTaskCreatePinnedToCore(
-      [](void *pvParameters)
-      {
         static_cast<SmartLadderEsp32 *>(pvParameters)->Task1code(pvParameters);
       },
       "Task1",
@@ -44,6 +31,18 @@ void SmartLadderEsp32::setup()
       1,
       &Task1,
       0);
+
+  xTaskCreatePinnedToCore(
+      [](void *pvParameters)
+      {
+        static_cast<SmartLadderEsp32 *>(pvParameters)->Task2code(pvParameters);
+      },
+      "Task2",
+      25000,
+      this,
+      1,
+      &Task2,
+      1);
   delay(500);
 }
 

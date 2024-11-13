@@ -1,6 +1,6 @@
 #include "Generic.h"
 
-int Generic::checkStatus(const char *port)
+float Generic::checkStatus(const char *port)
 {
     if (isdigit(port[0]))
     {

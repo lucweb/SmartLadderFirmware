@@ -5,9 +5,11 @@ bool Generic::atvIOPort(int resource, int tCond, int s)
   switch (tCond)
   {
   case 1:
+    if(!s) return s;
     return digitalRead(resource);
     break;
   case 2:
+    if(!s) return s;
     return !digitalRead(resource);
     break;
   case 3:

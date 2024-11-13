@@ -16,11 +16,14 @@ int BROKER_PORT = 1883;
 
 #if USE_WIFI
 WiFiClient client;
+// WiFiClient client2;
 #elif USE_ETH8720
 NetworkClient client;
+//NetworkClient client2;
 #endif
 
 PubSubClient MQTT(client);
+// PubSubClient MQTT2(client2);
 
 long int msWf = 0;
 byte T_C_ = 0;
@@ -41,6 +44,8 @@ void SmartLadderEsp32::checkStatusWifi()
     {
         if (!SSID_.equals("") && !PASW_.equals(""))
         {
+            //Serial.println(SSID_);
+            //Serial.println(PASW_);
             if (WiFi.begin(SSID_.c_str(), PASW_.c_str()))
                 delay(500);
         }

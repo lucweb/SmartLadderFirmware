@@ -20,8 +20,8 @@ void Generic::setCalc(const char *o, const char *prop)
             sB += prop[i];
     }
 
-    int a = 0;
-    int b = 0;
+    float a = 0;
+    float b = 0;
 
     if (isalpha(sA[0]))
     {
@@ -29,7 +29,7 @@ void Generic::setCalc(const char *o, const char *prop)
     }
     else
     {
-        a = sA.toInt();
+        a = sA.toFloat();
     }
 
     if (isalpha(sB[0]))
@@ -38,9 +38,9 @@ void Generic::setCalc(const char *o, const char *prop)
     }
     else
     {
-        b = sB.toInt();
+        b = sB.toFloat();
     }
-    
+
     int m = atoi(o + 1);
 
     switch (sC)
@@ -58,6 +58,6 @@ void Generic::setCalc(const char *o, const char *prop)
         CT_CT[m] = (a + b);
         break;
     default:
-        CT_CT[m] = 0;
+        CT_CT[m] = 0.00;
     }
 }

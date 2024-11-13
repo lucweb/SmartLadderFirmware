@@ -19,31 +19,33 @@ public:
   String R_R, P_P, F_F, TD_TD, DT_SV;
 
   uint16_t A_D[50];
-  long int TL_TL[50], A_M_S[50], CT_CT[50];
+  float CT_CT[50];
+  long int TL_TL[50], A_M_S[50];
   byte B_B[50], _ST, _TPR, C_CCCTU[50], C_CCCTD[50], DT_SV_S[50];
 
   int atvIADCPort(String resource);
 #else
   String P_P, F_F, R_R, TD_TD;
-  long int TL_TL[20], CT_CT[20];
+  long int TL_TL[20];
+  float CT_CT[20];
   byte B_B[20], _ST, _TPR, C_CCCTU[20], C_CCCTD[20];
   uint16_t A_D[30];
   int atvIADCPort(int resource);
 #endif
 
   bool stepper(int resource, String values);
-  bool basicStepper(int pin, int v, int totalSteps, int count);
-  bool asyncStepper(int pin, int v, int totalSteps, int count);
+  bool basicStepper(int pin, int v, unsigned long totalSteps, int count);
+  bool asyncStepper(int pin, int v, unsigned long totalSteps, int count);
   bool atvIOBit(const char *port, int tCond, int s);
   bool isForce(int i, char tipo = '0');
   void setForce(String m);
   void upForce();
   void start();
   bool atv(String tipoCond, String port, String prop, int s);
-  int checkStatus(const char *port);
+  float checkStatus(const char *port);
   bool setEqual(const char *tipoCond, const char *sA, const char *sB);
   void atvSet(const char *port, const char *value);
-  int getCount(int i);
+  float getCount(int i);
   bool setCount(int i, int t);
   void resetCount(int i);
   int setCountDown(int i, int t);
@@ -62,7 +64,11 @@ public:
   bool toggleDown(int i, bool st);
   bool toggleSetDown(int i, bool st);
   void setCalc(const char *o, const char *prop);
-
+  void timerConfigCallback(int pin, int v, int c, unsigned long totalSteps);
+#ifndef ESP32
+  void rstTimer();
+  void stpTimer();
+#endif
 #if USE_I2C
 
   bool atvIOPortI2c(int resource, int tCond, const char *prop, int s);

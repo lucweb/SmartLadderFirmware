@@ -7,9 +7,13 @@ bool Generic::atvIOBit(const char *port, int tCond, int s)
     switch (tCond)
     {
     case 1:
-        return B_B[b];
+        if (s)
+            return B_B[b];
+        break;
     case 2:
-        return !B_B[b];
+        if (s)
+            return !B_B[b];
+        break;
     case 3:
         if (!isForce(b, 'b'))
         {
@@ -35,5 +39,6 @@ bool Generic::atvIOBit(const char *port, int tCond, int s)
             B_B[b] = 0;
         break;
     }
+
     return s;
 }

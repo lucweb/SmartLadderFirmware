@@ -8,6 +8,8 @@ int Generic::atvIDACPort(int resource, const char *value)
   String v2 = "";
   String v3 = "";
   String v4 = "";
+  String v5 = "";
+  int iniMap = 0;
 
   for (size_t i = 0; i < strlen(value); i++)
   {
@@ -23,6 +25,8 @@ int Generic::atvIDACPort(int resource, const char *value)
         v3 += value[i];
       else if (p == 3)
         v4 += value[i];
+      else if (p == 4)
+        v5 += value[i];
     }
   }
 
@@ -42,7 +46,10 @@ int Generic::atvIDACPort(int resource, const char *value)
     tempValue = v1.toInt();
   }
 
-  int result = map(tempValue, v2.toInt(), v3.toInt(), 0, v4.toInt());
+  if (v5)
+    iniMap = v5.toInt();
+
+  int result = map(tempValue, v2.toInt(), v3.toInt(), iniMap, v4.toInt());
 
   ledcWrite(resource, result);
 
