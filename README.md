@@ -8,7 +8,8 @@
 
 - first: v1.0.0
 - v1.0.1
-- current: v1.0.2
+- v1.0.2
+- current: v1.0.3
 
 ## Installation
 
