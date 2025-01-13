@@ -1,10 +1,5 @@
 #include "SmartLadderArduino.h"
 
-void SmartLadderArduino::emit(String v)
-{
-    Serial.print(v);
-}
-
 void SmartLadderArduino::startTypeRequest(char e)
 {
     _TPR = e;
@@ -51,29 +46,29 @@ void SmartLadderArduino::eR()
         return;
     }
 
-    emit(F(">"));
+    Serial.print(F(">"));
 
     if (_TPR == 0x23 || _TPR == 0x40)
     {
-        emit(String(P_P.length()));
+        Serial.print(String(P_P.length()));
         if (_TPR == 0x40)
             setConfigProgram();
     }
     else if (_TPR == 0x24)
     {
         upForce();
-        emit(String(F_F.length()));
+        Serial.print(String(F_F.length()));
     }
     else if (_TPR == 0x7C || _TPR == 0x2A)
     {
         typePort();
-        emit(String(R_R.length()));
+        Serial.print(String(R_R.length()));
         if (_TPR == 0x2A)
             setConfigPort();
     }
     else if (_TPR == 0x63)
     {
-        emit(VERSION);
+        Serial.print(VERSION);
     }
     else if (_TPR == 0x7A)
     {
@@ -82,7 +77,7 @@ void SmartLadderArduino::eR()
     {
     }
 
-    emit(F("<"));
+    Serial.print(F("<"));
     _TPR = 0x0;
 }
 
@@ -110,8 +105,8 @@ void SmartLadderArduino::emitDigitalRead()
             p = "";
         }
     }
-    emit(v + '-');
-    emit(va + '-');
+    Serial.print(v + '-');
+    Serial.print(va + '-');
 }
 
 void SmartLadderArduino::setStatusResource()
@@ -120,15 +115,15 @@ void SmartLadderArduino::setStatusResource()
     emitDigitalRead();
 
     for (int x = 0; x < 10; x++)
-        emit(String(getTemp(x)) + ':');
+        Serial.print(String(getTemp(x)) + ':');
 
-    emit(F("-"));
+    Serial.print(F("-"));
     for (int x = 0; x < 10; x++)
-        emit(String(getCount(x)) + ':');
+        Serial.print(String(getCount(x)) + ':');
 
-    emit(F("-"));
+    Serial.print(F("-"));
     for (int x = 0; x < 20; x++)
-        emit(String(B_B[x])+':');
+        Serial.print(String(B_B[x])+':');
         
-    emit(F("<"));
+    Serial.print(F("<"));
 }

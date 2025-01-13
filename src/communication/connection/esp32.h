@@ -19,7 +19,7 @@ WiFiClient client;
 // WiFiClient client2;
 #elif USE_ETH8720
 NetworkClient client;
-//NetworkClient client2;
+// NetworkClient client2;
 #endif
 
 PubSubClient MQTT(client);
@@ -44,8 +44,8 @@ void SmartLadderEsp32::checkStatusWifi()
     {
         if (!SSID_.equals("") && !PASW_.equals(""))
         {
-            //Serial.println(SSID_);
-            //Serial.println(PASW_);
+            // Serial.println(SSID_);
+            // Serial.println(PASW_);
             if (WiFi.begin(SSID_.c_str(), PASW_.c_str()))
                 delay(500);
         }
@@ -148,9 +148,10 @@ void SmartLadderEsp32::dataConfig(bool bSave = false)
 
 void SmartLadderEsp32::TempStatusConnect()
 {
-    if ((millis() - msWf) >= (T_C_ <= 3 ? (T_C_ * 2000) : 60000))
+    if ((millis() - msWf) >= (T_C_ <= 3 ? 5000 : 60000))
     {
-        T_C_ += 1;
+        if (T_C_ < 4)
+            T_C_ += 1;
         msWf = 0;
         vStatusAll();
     }

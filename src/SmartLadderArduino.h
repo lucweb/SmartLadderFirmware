@@ -26,7 +26,6 @@ private:
   void receiver(char e);
   void emitDigitalRead();
   void setStatusResource();
-  void emit(String value);
 };
 
 #endif

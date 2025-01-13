@@ -51,6 +51,8 @@ void SmartLadderEsp32::loop() {}
 void SmartLadderEsp32::Task1code(void *pvParameters)
 {
   loadConfig();
+  loadPort();
+  loadProgram();
   for (;;)
   {
     if (DT_SV.length())
@@ -75,8 +77,6 @@ void SmartLadderEsp32::Task1code(void *pvParameters)
 
 void SmartLadderEsp32::Task2code(void *pvParameters)
 {
-  loadPort();
-  loadProgram();
   for (;;)
   {
     start();

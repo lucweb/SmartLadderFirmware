@@ -135,20 +135,23 @@ void SmartLadderEsp32::emitDigitalRead()
 void SmartLadderEsp32::setStatusResource()
 {
     _ST = 0;
+    String p = "";
     emitDigitalRead();
 
-    for (int x = 0; x < 10; x++)
-        emit(String(getTemp(x)) + ':');
-
-    emit(F("-"));
-    for (int x = 0; x < 10; x++)
-        emit(String(getCount(x)) + ':');
-
-    emit(F("-"));
     for (int x = 0; x < 30; x++)
-        emit(String(B_B[x])+':');
+        p += (String(getTemp(x)) + ':');
+    emit(p);
 
-    emit(F("<"));
+    p = String('-');
+    for (int x = 0; x < 30; x++)
+        p += (String(getCount(x)) + ':');
+    emit(p);
+
+    p = String('-');
+    for (int x = 0; x < 30; x++)
+        p += (String(B_B[x]) + ':');
+
+    emit(p + '<');
 }
 
 void SmartLadderEsp32::ctrlDtSv()

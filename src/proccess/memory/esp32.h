@@ -5,7 +5,9 @@
 void SmartLadderEsp32::loadConfig()
 {
   TEMP_ = "";
-  SPIFFS.begin(true);
+  if (!SPIFFS.begin())
+    SPIFFS.begin(true);
+
   File file = SPIFFS.open("/conf.txt", "r");
   if (file)
   {
